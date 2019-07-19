@@ -1,8 +1,4 @@
 .idea/
 TransferMoneyApi.iml
-embed/
-hk2/
-javax/
-jersey/
-pom/
 target/
+.DS_STORE

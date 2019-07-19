@@ -2,6 +2,7 @@ package main.java;
 
 import main.java.config.JerseyConfiguration;
 import org.apache.catalina.Context;
+import org.apache.catalina.Server;
 import org.apache.catalina.startup.Tomcat;
 import org.glassfish.jersey.servlet.ServletContainer;
 
@@ -10,10 +11,10 @@ public class Launcher {
     private static final String JERSEY_SERVLET_NAME = "jersey-container-servlet";
 
     public static void main(String[] args) throws Exception {
-        new Launcher().start();
+        new Launcher().start().await();
     }
 
-    void start() throws Exception {
+    public Server start() throws Exception {
 
         String port = System.getenv("PORT");
         if (port == null || port.isEmpty()) {
@@ -29,9 +30,9 @@ public class Launcher {
         Context context = tomcat.addContext(contextPath, appBase);
         Tomcat.addServlet(context, JERSEY_SERVLET_NAME,
                 new ServletContainer(new JerseyConfiguration()));
-        context.addServletMappingDecoded("/transfer/*", JERSEY_SERVLET_NAME);
+        context.addServletMappingDecoded("/*", JERSEY_SERVLET_NAME);
 
         tomcat.start();
-        tomcat.getServer().await();
+        return tomcat.getServer();
     }
 }

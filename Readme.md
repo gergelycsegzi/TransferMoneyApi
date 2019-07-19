@@ -40,6 +40,8 @@ Some initial assumptions:
 * Depositing, withdrawing
 
 **NOT** in scope due to time limitations:
+* Currencies
+* Proper error handling
 * Transfer history
 * Recurring transfers
 * Scheduled transfers
