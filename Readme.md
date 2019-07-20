@@ -1,4 +1,4 @@
-#Money Transfer api
+# Money Transfer api
 
 ## Overview
 This is an API for transferring money between accounts using JAX-RS, Jersey, embedded Tomcat and Maven. A number of assumptions are made, as listed under the API design header.
@@ -36,11 +36,11 @@ Some initial **assumptions**:
 * The usual functions of a bank account will be in a different API (for actions such as deposit, withdraw)
 * By using Tomcat I get multi-threading out of the box so I will only need to take care of thread-safety
 
-###**NOT** in scope of this API:
+### **NOT** in scope of this API:
 * Account management (creation, closure etc.)
 * Depositing, withdrawing
 
-###**NOT** in scope due to time limitations:
+### **NOT** in scope due to time limitations:
 * Currencies
 * Negative balances (overdraft)
 * Transfer history
