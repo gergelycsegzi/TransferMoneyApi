@@ -14,7 +14,7 @@ import java.util.Optional;
 @Path("account")
 public class AccountBalance {
 
-    @Path("balance/{accountId}")
+    @Path("{accountId}/balance")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response getBalanceForAccount(@PathParam("accountId") String accountId) {
@@ -24,7 +24,8 @@ public class AccountBalance {
         if (accountObject.isPresent()) {
             return Response.ok(accountObject.get().getBalance()).build();
         } else {
-            return Response.ok("ERROR: Account ID provided is incorrect").build();
+            return Response.status(Response.Status.BAD_REQUEST.getStatusCode(),
+                    "ERROR: Account ID provided is incorrect").build();
         }
     }
 }

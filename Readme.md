@@ -1,7 +1,7 @@
 #Money Transfer api
 
 ## Overview
-This is an API for transferring money between accounts. Therefore a number of assumptions are made, as listed under the API design header
+This is an API for transferring money between accounts using JAX-RS, Jersey, embedded Tomcat and Maven. A number of assumptions are made, as listed under the API design header.
 
 ## Building and executing
 ```mvn clean compile```
@@ -14,34 +14,35 @@ This is an API for transferring money between accounts. Therefore a number of as
 
 The embedded server will start on `http://localhost:8080/`
 
-This api has functions in the **/transfer** path
+### /transfer/from/{accountFrom}/to/{accountTo}/amount/{amount}
+Transfer amount from one account to another. Working example:
+```http://localhost:8080/transfer/from/ABC/to/testAccount/amount/5.5```
 
-### /charge
-
-### /send
+### /account/{accountId}/balance
+View balance for given account (for example testAccount)
+```http://localhost:8080/account/testAccount/balance```
 
 ## API design / requirements
 
-Based on the explicit requirements:
+Based on the explicit *requirements*:
 * Used by multiple systems and services => will need to be scalable and thread-safe
 * In-memory datastore => data is not persisted
 * Standalone executable => embedded server is required
-* Tests for proving API works
+* Tests for proving API works (including thread-safety)
 
-Some initial assumptions:
+Some initial **assumptions**:
 * Account management has its own API and accounts will be assumed to have been created. 
 * As the use of a database is not required for this exercise, some dummy accounts will be initialized in-memory.
 * The usual functions of a bank account will be in a different API (for actions such as deposit, withdraw)
-* Writing tests for thread-safety is hard and will not be in scope
 * By using Tomcat I get multi-threading out of the box so I will only need to take care of thread-safety
 
-**NOT** in scope of this API:
+###**NOT** in scope of this API:
 * Account management (creation, closure etc.)
 * Depositing, withdrawing
 
-**NOT** in scope due to time limitations:
+###**NOT** in scope due to time limitations:
 * Currencies
-* Proper error handling
+* Negative balances (overdraft)
 * Transfer history
 * Recurring transfers
 * Scheduled transfers
@@ -50,5 +51,6 @@ Some initial assumptions:
 * Money requests
 * Customisable reference messages (for transfers)
 * Metrics, logging, alarms
+* Proper error handling (with explicit exception objects)
 * Fraud detection
 

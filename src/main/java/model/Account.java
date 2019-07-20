@@ -6,7 +6,7 @@ public interface Account {
 
     boolean subtract(BigDecimal amount);
 
-    void add(BigDecimal amount);
+    boolean add(BigDecimal amount);
 
     BigDecimal getBalance();
 }

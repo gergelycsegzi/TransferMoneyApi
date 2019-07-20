@@ -5,8 +5,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class AccountImplementation implements Account{
 
-    AtomicReference<BigDecimal> balance;
     String accountId;
+    AtomicReference<BigDecimal> balance;
 
     public AccountImplementation(String accountId) {
         this.accountId = accountId;
@@ -16,6 +16,10 @@ public class AccountImplementation implements Account{
 
     @Override
     public boolean subtract(BigDecimal amount) {
+        if (amount.signum() < 0) {
+            return false; // This really should be throwing an exception
+        }
+
         BigDecimal currentBalance = balance.get();
         boolean enoughFunds = currentBalance.compareTo(amount) >= 0;
 
@@ -32,8 +36,12 @@ public class AccountImplementation implements Account{
     }
 
     @Override
-    public void add(BigDecimal amount) {
+    public boolean add(BigDecimal amount) {
+        if (amount.signum() < 0) {
+            return false;
+        }
         balance.accumulateAndGet(amount, BigDecimal::add);
+        return true;
     }
 
     @Override

@@ -19,14 +19,15 @@ public class AccountFactory {
         "456"
     );
 
+    // These are example accounts for the sake of manual testing
     private static Map<String, Account> accounts;
     static{
         Random rand = new Random();
         accounts = new HashMap<>();
         for (String accountId : accountIds) {
-            Account account = new AccountImplementation(accountId);
-            account.add(new BigDecimal(rand.nextDouble() * 100));
-            accounts.put(accountId, account);
+            Account account = createAccount(accountId);
+            // set random starting balance above 10 to guarantee test transfer
+            account.add(new BigDecimal(rand.nextDouble() * 100 + 10));
         }
     }
 
@@ -37,11 +38,18 @@ public class AccountFactory {
      * @return account for given id
      */
     public static Optional<Account> retrieveAccount(String accountId) {
-        if (accountIds.contains(accountId)) {
+        if (accounts.containsKey(accountId)) {
             return Optional.of(accounts.get(accountId));
         }
 
         return Optional.empty();
+    }
+
+    // This method is not exposed in the API
+    public static Account createAccount(String accountId) {
+        Account account = new AccountImplementation(accountId);
+        accounts.put(accountId, account);
+        return account;
     }
 
 }

@@ -23,7 +23,13 @@ public class Transfer {
                              @PathParam("amount") String amountString) {
 
         if (!NumberUtils.isParsable(amountString)) {
-            return Response.ok("ERROR: Amount provided is not correct number format").build();
+            return Response.status(Response.Status.BAD_REQUEST.getStatusCode(),
+                    "ERROR: Amount provided is not correct number format").build();
+        }
+
+        if (accountFrom.equals(accountTo)) {
+            return Response.status(Response.Status.BAD_REQUEST.getStatusCode(),
+                    "ERROR: Same account provided for source and target").build();
         }
 
         BigDecimal amount = new BigDecimal(amountString);
@@ -39,11 +45,13 @@ public class Transfer {
                 accountToObject.get().add(amount);
                 return Response.ok("SUCCESS").build();
             } else {
-                return Response.ok("ERROR: Insufficient balance on source account").build();
+                return Response.status(Response.Status.CONFLICT.getStatusCode(),
+                        "ERROR: Transfer cannot be carried out").build();
             }
 
         } else {
-            return Response.ok("ERROR: One or both account IDs provided are incorrect").build();
+            return Response.status(Response.Status.BAD_REQUEST.getStatusCode(),
+                    "ERROR: One or both account IDs provided are incorrect").build();
         }
     }
 }
