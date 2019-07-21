@@ -4,6 +4,13 @@
 This is an API for transferring money between accounts using JAX-RS, Jersey, embedded Tomcat and Maven. A number of assumptions are made, as listed under the API design header.
 
 ## Building and executing
+
+Use the provided executable:
+
+```java -jar transfer-money-api-1.0-SNAPSHOT.jar```
+
+Or rebuild the project:
+
 ```mvn clean compile```
 
 ```mvn package```
